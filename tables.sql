@@ -5,7 +5,8 @@ CREATE TABLE company
     phone varchar (20),
     user_id int REFERENCES [user],
     CONSTRAINT check_company
-        CHECK ([name] IS NOT NULL AND [phone] IS NOT NULL)
+         CHECK ([name] IS NOT NULL
+           AND  [phone] IS NOT NULL)
 ) GO
 
 CREATE TABLE conference
@@ -16,7 +17,8 @@ CREATE TABLE conference
     date_start date,
     date_end date,
     CONSTRAINT check_conference
-        CHECK ([date_start] IS NOT NULL AND [date_end] IS NOT NULL)
+         CHECK ([date_start] IS NOT NULL
+           AND  [date_end] IS NOT NULL)
 ) GO
 
 CREATE TABLE conference_day
@@ -31,7 +33,10 @@ CREATE TABLE conference_day
     conference_id int REFERENCES conference,
     student_discount int,
     CONSTRAINT check_conference_day
-        CHECK ([theme] IS NOT NULL AND [time_start] IS NOT NULL AND [time_end] IS NOT NULL AND [max_participants] IS NOT NULL)
+         CHECK ([theme] IS NOT NULL
+           AND  [time_start] IS NOT NULL
+           AND  [time_end] IS NOT NULL
+           AND  [max_participants] IS NOT NULL)
 ) GO
 
 CREATE TABLE conference_day_booking
@@ -44,7 +49,8 @@ CREATE TABLE conference_day_booking
     conference_day_id int REFERENCES conference_day,
     user_id int REFERENCES [user],
     CONSTRAINT check_conference_day_booking
-        CHECK ([full_price_ticket_count] >= 0 AND [reduced_priced_ticket_count] >= 0)
+         CHECK ([full_price_ticket_count] >= 0
+           AND  [reduced_priced_ticket_count] >= 0)
 ) GO
 
 CREATE TABLE conference_day_registration
@@ -64,7 +70,8 @@ CREATE TABLE individual_user
     name varchar (255),
     surname varchar (255),
     CONSTRAINT check_individual_user
-        CHECK ([name] IS NOT NULL AND [surname] IS NOT NULL)
+         CHECK ([name] IS NOT NULL
+           AND  [surname] IS NOT NULL)
 ) GO
 
 CREATE TABLE participant
@@ -74,7 +81,8 @@ CREATE TABLE participant
     surname varchar (255),
     PESEL varchar(11) UNIQUE,
     CONSTRAINT check_participant
-        CHECK ([name] IS NOT NULL AND [surname] IS NOT NULL)
+         CHECK ([name] IS NOT NULL
+           AND  [surname] IS NOT NULL)
 ) GO
 
 CREATE TABLE payment
@@ -113,7 +121,9 @@ CREATE TABLE workshop
     start_time datetime,
     end_time datetime,
     CONSTRAINT check_workshop
-        CHECK ([name] IS NOT NULL AND [max_participants] IS NOT NULL AND [price] IS NOT NULL)
+         CHECK ([name] IS NOT NULL
+           AND  [max_participants] IS NOT NULL
+           AND  [price] IS NOT NULL)
 ) GO
 
 CREATE TABLE workshop_booking
@@ -126,7 +136,8 @@ CREATE TABLE workshop_booking
     conference_day_booking_id int REFERENCES conference_day_booking,
     workshop_id int REFERENCES workshop,
     CONSTRAINT check_workshop_booking
-        CHECK ([full_price_ticket_count] >= 0 AND [reduced_priced_ticket_count] >= 0)
+         CHECK ([full_price_ticket_count] >= 0
+           AND  [reduced_priced_ticket_count] >= 0)
 ) GO
 
 CREATE TABLE workshop_registration
@@ -134,7 +145,7 @@ CREATE TABLE workshop_registration
     id int IDENTITY PRIMARY KEY,
     registration_date datetime
     CONSTRAINT check_workshop_registration
-        CHECK ([registration_date] IS NOT NULL),
+         CHECK ([registration_date] IS NOT NULL),
     cancel_date datetime,
     workshop_booking_id int REFERENCES workshop_booking,
     conference_day_registration_id int REFERENCES conference_day_registration
